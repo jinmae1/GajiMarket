@@ -3,6 +3,9 @@ package com.gaji.mini.post.model.vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.gaji.mini.item.model.vo.Item;
+import com.gaji.mini.member.model.vo.Seller;
+
 public class Post implements Serializable {
 
 	private static final long serialVersionUID = 1L;

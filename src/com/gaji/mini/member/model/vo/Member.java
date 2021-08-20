@@ -1,34 +1,25 @@
 package com.gaji.mini.member.model.vo;
 
+import java.io.Serializable;
+
 import com.gaji.mini.item.model.vo.Item;
 
-public abstract class Member {
+public abstract class Member implements Serializable {
 
-	private String ID;
-	private String name;
-	private String pw;
-	private long money;
-	private float manner;
-	private Item[] items;
+	protected final String ID;
+	protected String name;
+	protected String pw;
+	protected int money;
+	protected Item[] items;
 
-	public Member() {
-	}
-
-	public Member(String ID, String name, String pw, long money, float manner, Item[] items) {
+	public Member(String ID, String pw, String name) {
 		this.ID = ID;
-		this.name = name;
 		this.pw = pw;
-		this.money = money;
-		this.manner = manner;
-		this.items = items;
+		this.name = name;
 	}
 
 	public String getID() {
 		return ID;
-	}
-
-	public void setID(String iD) {
-		this.ID = ID;
 	}
 
 	public String getName() {
@@ -51,16 +42,8 @@ public abstract class Member {
 		return money;
 	}
 
-	public void setMoney(long money) {
+	public void setMoney(int money) {
 		this.money = money;
-	}
-
-	public float getManner() {
-		return manner;
-	}
-
-	public void setManner(float manner) {
-		this.manner = manner;
 	}
 
 	public Item[] getItems() {
@@ -69,6 +52,11 @@ public abstract class Member {
 
 	public void setItems(Item[] items) {
 		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		return name + "(" + ID + ")";
 	}
 
 }

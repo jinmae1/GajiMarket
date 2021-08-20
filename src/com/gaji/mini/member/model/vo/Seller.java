@@ -7,17 +7,11 @@ import com.gaji.mini.item.model.vo.Item;
 public class Seller extends Member {
 	Scanner sc = new Scanner(System.in);
 
+	private float manner = 36.5f;
 	private String[] sellList;
 
-	public Seller() {
-	}
-
-	public Seller(String[] sellList) {
-		this.sellList = sellList;
-	}
-
-	public Seller(String iD, String name, String pw, long money, float manner, Item[] items) {
-		super(iD, name, pw, money, manner, items);
+	public Seller(String ID, String pw, String name, Item[] items) {
+		super(ID, pw, name);
 	}
 
 	public String[] getSellList() {
@@ -32,7 +26,7 @@ public class Seller extends Member {
 
 	}
 
-	public long withDraw() {
+	public int withDraw() {
 		// Long drawMoney = sc.nextInt();
 		// return this.getMoney() - drawMoney;
 		return 0;

@@ -18,7 +18,7 @@ public class PostIO {
 			Set<Integer> keySet = posts.keySet();
 			posts.putAll(posts);
 
-			for (Integer key : keySet) {
+			for (Integer key : keySet) { // key == postNo
 				posts.put(key, posts.get(key));
 				System.out.println(posts.get(key));
 			}
