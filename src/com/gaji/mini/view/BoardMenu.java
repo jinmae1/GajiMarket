@@ -47,22 +47,28 @@ public class BoardMenu {
 			switch (choice) {
 				case 1:
 					board.listPosts();
+					// 게시판 조회
+					int postNo = selectPostNo();
+					showPost(postNo);
 					break;
 
 				case 2:
 					board.createPost((Seller) currentUser, writePost((Seller) currentUser));
+					// 상품 등록
 					break;
 
 				case 3:
 					showUserInfo(currentUser);
+					// 로그인 유저 정보 출력
 					System.out.println(((Seller) currentUser).getPostedList());
 					break;
 
 				case 5:
 					System.out.print("postNo: ");
-					int postNo = sc.nextInt();
+					int selectedNo = sc.nextInt();
 					System.out.println("%%%%%%");
 					System.out.println(board.deletePost((Seller) currentUser, postNo));
+					// 삭제
 					System.out.println("%%%%%%");
 					break;
 
@@ -79,6 +85,17 @@ public class BoardMenu {
 					}
 			}
 		}
+	}
+
+	private void showPost(int postNo) {
+		ScreenClear.clearScreen(0);
+		Post temp = board.getPost(postNo);
+		// 여기서 보여주고 사용자가 돌아가기(ex -1 등을 누르면 게시판 메뉴로 가기)
+	}
+
+	private int selectPostNo() {
+		// TODO: 스캐너로 입력받고 입력 받은 값을 리턴
+		return 0;
 	}
 
 	private void showUserInfo(Member m) {
