@@ -15,6 +15,9 @@ public class PostIO {
 				new BufferedInputStream(new FileInputStream(dir + fileName)))) {
 
 			posts = (HashMap<Integer, Post>) ois.readObject();
+			if (posts == null) {
+				return new HashMap<>();
+			}
 			Set<Integer> keySet = posts.keySet();
 			posts.putAll(posts);
 
@@ -22,6 +25,11 @@ public class PostIO {
 				posts.put(key, posts.get(key));
 				System.out.println(posts.get(key));
 			}
+		} catch (NullPointerException npe) {
+			return posts;
+		} catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+			writeFile(null);
 
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();

@@ -43,14 +43,17 @@ public class GajiMenu {
 					String id = inputID();
 					String pw = inputPW();
 					String memberType;
-					memberType = memberManager.checkMemberType(id);
-					// if( memberManager.getMember(id);
-					new BoardMenu();
-					if ("buyer".equals(memberType)) {
-						System.out.println(memberManager.getMember(id));
-					} else if ("seller".equals(memberType)) {
+					Member logInMember = memberManager.getMember(id);
+					System.out.println("___________________________");
+					System.out.println(logInMember);
+					// memberType = memberManager.checkMemberType(id);
+					if (memberManager.checkPassword(logInMember, pw))
+						new BoardMenu(logInMember).boardMenu();
+					// if ("buyer".equals(memberType)) {
+					// System.out.println(memberManager.getMember(id));
+					// } else if ("seller".equals(memberType)) {
 						// seller = (Seller) memberManager.getMember(id);
-					}
+					// }
 
 					break;
 

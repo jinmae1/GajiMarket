@@ -27,8 +27,8 @@ public class MemberIO {
 			}
 		} catch (NullPointerException npe) {
 			return members;
-		} catch (FileNotFoundException fne) {
-			fne.printStackTrace();
+		} catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
 			writeFile(null);
 
 		} catch (Exception e) {

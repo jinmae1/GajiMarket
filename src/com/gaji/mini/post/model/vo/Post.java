@@ -12,7 +12,7 @@ public class Post implements Serializable {
 
 	private final int postNo; // Key Value
 	private Item item;
-	private Seller postedBy;
+	private String postedBy;
 	private String title;
 	private String content;
 	private boolean isSold;
@@ -25,7 +25,7 @@ public class Post implements Serializable {
 	// this.content = content;
 	// }
 
-	public Post(int postNo, Item item, Seller postedBy, String title, String content) {
+	public Post(int postNo, Item item, String postedBy, String title, String content) {
 		this.postNo = postNo;
 		this.item = item;
 		this.postedBy = postedBy;
@@ -50,11 +50,11 @@ public class Post implements Serializable {
 		this.item = item;
 	}
 
-	public Seller getPostedBy() {
+	public String getPostedBy() {
 		return this.postedBy;
 	}
 
-	public void setPostedBy(Seller postedBy) {
+	public void setPostedBy(String postedBy) {
 		this.postedBy = postedBy;
 	}
 
@@ -88,6 +88,11 @@ public class Post implements Serializable {
 
 	public void setPostedAt(LocalDateTime postedAt) {
 		this.postedAt = postedAt;
+	}
+
+	@Override
+	public String toString() {
+		return postNo + ". " + title;
 	}
 
 }

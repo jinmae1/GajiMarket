@@ -34,7 +34,10 @@ public class MemberManager {
 
 	public boolean checkPassword(Member m, String password) {
 		if (password.equals(m.getPw()))
+		{
+			System.out.println(m.getPw());
 			return true;
+		}
 		return false;
 	}
 
@@ -45,10 +48,12 @@ public class MemberManager {
 	}
 
 	public boolean UserExists(String id) {
+		members.putAll(mio.readFile());
 		return members.containsKey(id);
 	}
 
 	public Member getMember(String id) {
+		members.putAll(mio.readFile());
 		return members.get(id);
 	}
 
