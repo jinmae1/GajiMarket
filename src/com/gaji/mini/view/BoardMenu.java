@@ -50,7 +50,7 @@ public class BoardMenu {
 					break;
 
 				case 2:
-					board.createPost(writePost((Seller) currentUser));
+					board.createPost((Seller) currentUser, writePost((Seller) currentUser));
 					break;
 
 				case 3:

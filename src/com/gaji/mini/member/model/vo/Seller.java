@@ -34,6 +34,10 @@ public class Seller extends Member {
 		postedList.add(postNo);
 	}
 
+	public void removeFromPostedList(int postNo) {
+		postedList.remove(Integer.valueOf(postNo));
+	}
+
 	public int withDraw() {
 		// Long drawMoney = sc.nextInt();
 		// return this.getMoney() - drawMoney;

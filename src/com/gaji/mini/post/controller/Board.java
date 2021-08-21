@@ -19,20 +19,26 @@ public class Board {
 	// * 는 키값이며 post 객체 스스로가 생성하는 것이 아니라 게시판이(Board; PostManager)이 순차적으로 부여함
 	// * 게시글이 삭제되어도 글번호는 유지됨
 	// * create의 리턴값은 hashMap put의 리턴값과 동일(view에서 put 성공 여부에 사용)
-	public Post createPost(Post p) {
+	public Post createPost(Seller s, Post p) {
 		Post oldPost;
 		posts = pio.readFile();
 		oldPost = posts.put(p.getPostNo(), p); // ! 여기서 p.getPost()를 하면 안됨
 		pio.writeFile(posts);
+		memberManager.addMember(s);
 
 		return oldPost;
 	}
 
 	public Post deletePost(Seller s, int p) {
+		Post temp = null;
 		posts.putAll(pio.readFile());
-		// if (s.getPostedList().contains(p)) {
-		Post temp = posts.remove(p);
-		pio.writeFile(posts);
+		if (s.getPostedList().contains(p)) {
+			temp = posts.remove(p);
+			s.removeFromPostedList(p);
+			pio.writeFile(posts);
+		} else
+			System.out.println("삭제할 수 없습니다.");
+		// TODO: 에러메시지는 뷰로 옮기기
 
 		return temp;
 	}
