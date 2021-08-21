@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.Scanner;
 
 import com.gaji.mini.member.model.io.MemberIO;
-import com.gaji.mini.member.model.vo.Member;
+import com.gaji.mini.member.model.vo.*;
 
 public class MemberManager {
 	private Map<String, Member> members = new HashMap<>();
@@ -20,8 +20,22 @@ public class MemberManager {
 		return oldMember;
 	}
 
-	public Member removeMember(Member m) {
-		return members.remove(m.getID());
+	public Member removeMember(String id, String pw) {
+		members.putAll(mio.readFile());
+		System.out.println("멤버: " + members.get(id));
+		if (UserExists(id)) {
+			System.out.println("비번: " + members.get(id).getPw());
+			if (pw.equals(members.get(id).getPw())) {
+				System.out.println("하이");
+				Member temp = members.remove(id);
+				System.out.println(temp);
+				System.out.println("바이");
+				mio.writeFile(members);
+				return temp;
+			}
+
+		}
+		return null;
 	}
 
 	// 멤버를 리스트로 반환하는 게 아니라 멤버의 목록(list)을 보여주는 함수
@@ -30,6 +44,28 @@ public class MemberManager {
 		return members;
 	}
 
+	public boolean UserExists(String id) {
+		return members.containsKey(id);
+	}
+
+	public Member getMember(String id) {
+		return members.get(id);
+	}
+
+	// 인자로 넣은 멤버값이 판매자면 "buyer" 구매자면 "seller" 리턴
+	public String checkMemberType(String id) {
+		if (UserExists(id)) {
+			if (members.get(id) instanceof Buyer) {
+				System.out.println("++++it's buyer++++");
+				return "buyer";
+			} else if (members.get(id) instanceof Seller) {
+				System.out.println("++++it's seller++++");
+				return "seller";
+			}
+		}
+		System.out.println("null");
+		return null;
+	}
 
 	// Scanner sc = new Scanner(System.in);
 	// final String dir = "database/";

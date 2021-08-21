@@ -1,18 +1,21 @@
 package com.gaji.mini.view;
 
+import java.util.Map;
 import java.util.Scanner;
 
+import com.gaji.mini.item.model.vo.Item;
 import com.gaji.mini.lib.ScreenClear;
 import com.gaji.mini.member.controller.MemberManager;
-import com.gaji.mini.member.model.io.MemberIO;
 import com.gaji.mini.member.model.vo.*;
+import com.gaji.mini.post.model.vo.Post;
 
 public class GajiMenu {
 	Scanner sc = new Scanner(System.in);
 	private MemberManager memberManager = new MemberManager();
+	private String memberType;
 
 	public void mainMenu() {
-		String menu = "==============\n1. 구매자 회원가입\n" + "2. 사업자 회원가입\n" + "3. 회원 탈퇴\n" + "9. 전체 회원\n"
+		String menu = "==============\n1. 구매자 회원가입\n" + "2. 사업자 회원가입\n" + "3. 회원 탈퇴\n" + "4. 로그인\n" + "9. 전체 회원\n"
 				+ "0. 프로그램 종료\n==============";
 
 		ScreenClear.clearScreen(500);
@@ -34,12 +37,27 @@ public class GajiMenu {
 				case 3:
 					// * 판매자인지 구매자인지 선택 후 회원이 존재하는지 확인
 					// TODO: if(memberManger.UserExists())
-					memberManager.removeMember(inputMember());
+					System.out.println(memberManager.removeMember(inputID(), inputPW()));
+					break;
+
+				case 4:
+					// TODO: 로그인 후 화면 만들기
+					String id = inputID();
+					Member member;
+					Seller seller;
+					memberType = memberManager.checkMemberType(id);
+					if ("buyer".equals(memberType)) {
+						System.out.println(memberManager.getMember(id));
+					} else if ("seller".equals(memberType)) {
+						seller = (Seller) memberManager.getMember(id);
+						seller.writePost(new Post(1, new Item("book", 1000), seller, "This is a book", "It's old"));
+					}
+
 					break;
 
 				case 9:
-						memberManager.listMembers();
-					ScreenClear.clearScreen(3000);
+					memberManager.listMembers();
+					// ScreenClear.clearScreen(3000);
 
 					break;
 
@@ -67,7 +85,7 @@ public class GajiMenu {
 		return sc.next();
 	}
 
-	private String inputNmae() {
+	private String inputName() {
 		System.out.print("Name: ");
 		return sc.next();
 	}
@@ -97,7 +115,7 @@ public class GajiMenu {
 		 */
 
 		pw = inputPW();
-		name = inputNmae();
+		name = inputName();
 		ScreenClear.clearScreen(0);
 		// 사용자 입력을 받아서 Member객체 만들고, 리턴
 		// return new Member();

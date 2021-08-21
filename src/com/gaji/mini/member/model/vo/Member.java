@@ -56,7 +56,7 @@ public abstract class Member implements Serializable {
 
 	@Override
 	public String toString() {
-		return name + "(" + ID + ")";
+		return String.format("Type: %s\tID: %s\t Name: %s\tpw:%s", this.getClass().getSimpleName(), ID, name, pw);
 	}
 
 }
