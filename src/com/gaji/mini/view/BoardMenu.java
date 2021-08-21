@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.gaji.mini.item.model.vo.Item;
 import com.gaji.mini.lib.ScreenClear;
+import com.gaji.mini.lib.TextColors;
 import com.gaji.mini.member.model.vo.Buyer;
 import com.gaji.mini.member.model.vo.Member;
 import com.gaji.mini.member.model.vo.Seller;
@@ -14,15 +15,25 @@ public class BoardMenu {
 	Scanner sc = new Scanner(System.in);
 	private Board board = new Board();
 	private Member currentUser;
-	String menu;
+	String menu = "==============\n1. 게시판 조회\n" + "2. 상품 OO\n" + "3. 정보 조회\n" + "4. XX";
 
 	public BoardMenu(Member logInMember) {
 		this.currentUser = logInMember;
 
 		if (currentUser instanceof Seller)
-			menu = "==============\n1. 게시판 조회\n" + "2. 상품 등록\n" + "3. 정보 조회\n" + "4. 상품 샌산";
+		{
+			menu = menu.replace("00", "등록");
+			menu = menu.replace("XX", "상품 생산");
+			// menu = "==============\n1. 게시판 조회\n" + "2. 상품 등록\n" + "3. 정보 조회\n" + "4. 상품
+			// 생산";
+		}
 		if (currentUser instanceof Buyer)
-			menu = "==============\n1. 게시판 조회\n" + "2. 상품 구매\n" + "3. 정보 조회\n" + "4. 상품 생산";
+		{
+			menu = menu.replace("00", "구매");
+			menu = menu.replace("XX", "포인트 벌기");
+			// menu = "==============\n1. 게시판 조회\n" + "2. 상품 구매\n" + "3. 정보 조회\n" + "4. 포인트
+			// 벌기";
+		}
 
 		this.boardMenu();
 	}
