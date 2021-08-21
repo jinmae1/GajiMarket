@@ -2,6 +2,9 @@ package com.gaji.mini.post.controller;
 
 import java.util.*;
 
+import com.gaji.mini.member.controller.MemberManager;
+import com.gaji.mini.member.model.io.MemberIO;
+import com.gaji.mini.member.model.vo.Seller;
 import com.gaji.mini.post.model.io.PostIO;
 import com.gaji.mini.post.model.vo.Post;
 
@@ -9,6 +12,7 @@ public class Board {
 
 	private Map<Integer, Post> posts = new HashMap<>();
 	private PostIO pio = new PostIO();
+	private MemberManager memberManager = new MemberManager();
 	private int postNo = 0; // readFile을 한 후 post의 개수만큼 카운트
 
 	// TODO: post 생성 시 글번호(postNo) 부여
@@ -24,8 +28,18 @@ public class Board {
 		return oldPost;
 	}
 
-	public Post deletePost(Post p) {
-		return posts.remove(p.getPostNo());
+	public Post deletePost(Seller s, int p) {
+		posts.putAll(pio.readFile());
+		// if (s.getPostedList().contains(p)) {
+		Post temp = posts.remove(p);
+		pio.writeFile(posts);
+
+		return temp;
+	}
+
+	public Post getPost(int postNo) {
+		posts.putAll(pio.readFile());
+		return posts.get(postNo);
 	}
 
 	// TODO: editPost 작성

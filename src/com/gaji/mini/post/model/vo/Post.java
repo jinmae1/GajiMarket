@@ -92,7 +92,7 @@ public class Post implements Serializable {
 
 	@Override
 	public String toString() {
-		return postNo + ". " + title;
+		return postNo + ". " + title + postedBy;
 	}
 
 }

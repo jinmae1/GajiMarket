@@ -1,5 +1,7 @@
 package com.gaji.mini.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -52,7 +54,7 @@ public class GajiMenu {
 					// if ("buyer".equals(memberType)) {
 					// System.out.println(memberManager.getMember(id));
 					// } else if ("seller".equals(memberType)) {
-						// seller = (Seller) memberManager.getMember(id);
+					// seller = (Seller) memberManager.getMember(id);
 					// }
 
 					break;
@@ -62,7 +64,7 @@ public class GajiMenu {
 					break;
 
 				case 9:
-					memberManager.listMembers();
+					sort(memberManager.listMembers());
 					// ScreenClear.clearScreen(3000);
 
 					break;
@@ -134,6 +136,17 @@ public class GajiMenu {
 
 	}
 
+	private void sort(Map<String, Member> m) {
+
+		List<String> keyList = new ArrayList<>(m.keySet());
+		keyList.sort((s1, s2) -> s1.compareTo(s2));
+		for (String key : keyList) {
+			m.put(key, m.get(key));
+			System.out.println(m.put(key, m.get(key)));
+		}
+
+	}
+
 	public void GameMenu() {
 		String gamemenu = "==============\n1. 가위바위보\n" + "2. 업다운\n" + "3. ㅁㅁㅁ\n" + "4. ㅁㅁㅁ\n"
 				+ "0. 돌아가기\n==============";
@@ -178,6 +191,3 @@ public class GajiMenu {
 		}
 	}
 }
-
-
-

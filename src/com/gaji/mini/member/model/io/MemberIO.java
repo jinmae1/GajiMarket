@@ -23,7 +23,7 @@ public class MemberIO {
 
 			for (String key : keySet) { // key == ID
 				members.put(key, members.get(key));
-				System.out.println(members.get(key));
+				// System.out.println(members.get(key));
 			}
 		} catch (NullPointerException npe) {
 			return members;

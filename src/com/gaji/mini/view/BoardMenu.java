@@ -15,21 +15,19 @@ public class BoardMenu {
 	Scanner sc = new Scanner(System.in);
 	private Board board = new Board();
 	private Member currentUser;
-	String menu = "==============\n1. 게시판 조회\n" + "2. 상품 OO\n" + "3. 정보 조회\n" + "4. XX";
+	String menu = "==============\n1. 게시판 조회\n" + "2. 상품 OO\n" + "3. 정보 조회\n" + "4. XX\n" + "5. 상품 삭제";
 
 	public BoardMenu(Member logInMember) {
 		this.currentUser = logInMember;
 
-		if (currentUser instanceof Seller)
-		{
-			menu = menu.replace("00", "등록");
+		if (currentUser instanceof Seller) {
+			menu = menu.replace("OO", "등록");
 			menu = menu.replace("XX", "상품 생산");
 			// menu = "==============\n1. 게시판 조회\n" + "2. 상품 등록\n" + "3. 정보 조회\n" + "4. 상품
 			// 생산";
 		}
-		if (currentUser instanceof Buyer)
-		{
-			menu = menu.replace("00", "구매");
+		if (currentUser instanceof Buyer) {
+			menu = menu.replace("OO", "구매");
 			menu = menu.replace("XX", "포인트 벌기");
 			// menu = "==============\n1. 게시판 조회\n" + "2. 상품 구매\n" + "3. 정보 조회\n" + "4. 포인트
 			// 벌기";
@@ -39,7 +37,6 @@ public class BoardMenu {
 	}
 
 	public void boardMenu() {
-
 
 		ScreenClear.clearScreen(500);
 		while (true) {
@@ -58,6 +55,15 @@ public class BoardMenu {
 
 				case 3:
 					showUserInfo(currentUser);
+					System.out.println(((Seller) currentUser).getPostedList());
+					break;
+
+				case 5:
+					System.out.print("postNo: ");
+					int postNo = sc.nextInt();
+					System.out.println("%%%%%%");
+					System.out.println(board.deletePost((Seller) currentUser, postNo));
+					System.out.println("%%%%%%");
 					break;
 
 				case 0:
@@ -106,6 +112,10 @@ public class BoardMenu {
 		System.out.print("내용: ");
 		content = sc.nextLine();
 
+		s.addToPostedList(postNo);
+		System.out.println("_______++++++++++++++____________________");
+		System.out.println(s.getPostedList());
+		System.out.println("_______++++++++++++++____________________");
 		return new Post(postNo, item, s.toString(), title, content);
 	}
 
