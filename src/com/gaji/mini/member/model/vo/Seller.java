@@ -27,6 +27,7 @@ public class Seller extends Member {
 
 	public void writePost(Post m) {
 
+
 	}
 
 	public int withDraw() {

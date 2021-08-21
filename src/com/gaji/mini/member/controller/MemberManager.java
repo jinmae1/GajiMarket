@@ -22,20 +22,20 @@ public class MemberManager {
 
 	public Member removeMember(String id, String pw) {
 		members.putAll(mio.readFile());
-		System.out.println("멤버: " + members.get(id));
 		if (UserExists(id)) {
-			System.out.println("비번: " + members.get(id).getPw());
-			if (pw.equals(members.get(id).getPw())) {
-				System.out.println("하이");
+			if (checkPassword(members.get(id), pw)) {
 				Member temp = members.remove(id);
-				System.out.println(temp);
-				System.out.println("바이");
 				mio.writeFile(members);
 				return temp;
 			}
-
 		}
 		return null;
+	}
+
+	public boolean checkPassword(Member m, String password) {
+		if (password.equals(m.getPw()))
+			return true;
+		return false;
 	}
 
 	// 멤버를 리스트로 반환하는 게 아니라 멤버의 목록(list)을 보여주는 함수

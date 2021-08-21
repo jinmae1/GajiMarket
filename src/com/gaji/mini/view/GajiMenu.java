@@ -3,6 +3,8 @@ package com.gaji.mini.view;
 import java.util.Map;
 import java.util.Scanner;
 
+// import com.gaji.mini.game.RockPaperScissors;
+// import com.gaji.mini.game.UpDown;
 import com.gaji.mini.item.model.vo.Item;
 import com.gaji.mini.lib.ScreenClear;
 import com.gaji.mini.member.controller.MemberManager;
@@ -12,7 +14,6 @@ import com.gaji.mini.post.model.vo.Post;
 public class GajiMenu {
 	Scanner sc = new Scanner(System.in);
 	private MemberManager memberManager = new MemberManager();
-	private String memberType;
 
 	public void mainMenu() {
 		String menu = "==============\n1. 구매자 회원가입\n" + "2. 사업자 회원가입\n" + "3. 회원 탈퇴\n" + "4. 로그인\n" + "9. 전체 회원\n"
@@ -26,7 +27,6 @@ public class GajiMenu {
 
 			switch (choice) {
 				case 1:
-					// TODO: 지금은 바로 가입이지만 판매자,구매자를 해당 메뉴에서 분리하든지 하위 메뉴로 가기
 					memberManager.addMember(inputMember("buyer"));
 					break;
 
@@ -35,24 +35,27 @@ public class GajiMenu {
 					break;
 
 				case 3:
-					// * 판매자인지 구매자인지 선택 후 회원이 존재하는지 확인
-					// TODO: if(memberManger.UserExists())
 					System.out.println(memberManager.removeMember(inputID(), inputPW()));
 					break;
 
 				case 4:
 					// TODO: 로그인 후 화면 만들기
 					String id = inputID();
-					Member member;
-					Seller seller;
+					String pw = inputPW();
+					String memberType;
 					memberType = memberManager.checkMemberType(id);
+					// if( memberManager.getMember(id);
+					new BoardMenu();
 					if ("buyer".equals(memberType)) {
 						System.out.println(memberManager.getMember(id));
 					} else if ("seller".equals(memberType)) {
-						seller = (Seller) memberManager.getMember(id);
-						seller.writePost(new Post(1, new Item("book", 1000), seller, "This is a book", "It's old"));
+						// seller = (Seller) memberManager.getMember(id);
 					}
 
+					break;
+
+				case 5:
+					GameMenu();
 					break;
 
 				case 9:
@@ -126,6 +129,50 @@ public class GajiMenu {
 		else
 			return null; // error
 
+	}
+
+	public void GameMenu() {
+		String gamemenu = "==============\n1. 가위바위보\n" + "2. 업다운\n" + "3. ㅁㅁㅁ\n" + "4. ㅁㅁㅁ\n"
+				+ "0. 돌아가기\n==============";
+		ScreenClear.clearScreen(500);
+
+		System.out.println(gamemenu);
+		System.out.print("> 입력: ");
+		int choice = sc.nextInt();
+
+		while (true) {
+
+			switch (choice) {
+				case 1:
+					// new RockPaperScissors().Start();
+					break;
+
+				case 2:
+					// new UpDown().Start();
+					break;
+
+				case 3:
+
+					break;
+
+				case 4:
+
+					break;
+
+				case 0:
+					return;
+				// break;
+
+				default:
+					System.out.println("잘못 입력하셨습니다.");
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					break;
+			}
+		}
 	}
 }
 
