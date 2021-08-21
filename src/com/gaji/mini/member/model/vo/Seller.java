@@ -3,14 +3,15 @@ package com.gaji.mini.member.model.vo;
 import java.util.Scanner;
 
 import com.gaji.mini.item.model.vo.Item;
+import com.gaji.mini.post.controller.Board;
+import com.gaji.mini.post.model.vo.Post;
 
 public class Seller extends Member {
-	Scanner sc = new Scanner(System.in);
 
 	private float manner = 36.5f;
 	private String[] sellList;
 
-	public Seller(String ID, String pw, String name, Item[] items) {
+	public Seller(String ID, String pw, String name) {
 		super(ID, pw, name);
 	}
 
@@ -19,10 +20,12 @@ public class Seller extends Member {
 	}
 
 	public void setSellList(String[] sellList) {
+		// TODO: sellList 배열이 아니라 string이 추가 되어야 함
+		// * setSellList보다는 addSellList가 어울림
 		this.sellList = sellList;
 	}
 
-	public void post() {
+	public void writePost(Post m) {
 
 	}
 

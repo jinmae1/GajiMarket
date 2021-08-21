@@ -5,15 +5,15 @@ import java.util.Scanner;
 import com.gaji.mini.lib.ScreenClear;
 import com.gaji.mini.member.controller.MemberManager;
 import com.gaji.mini.member.model.io.MemberIO;
-import com.gaji.mini.member.model.vo.Buyer;
-import com.gaji.mini.member.model.vo.Member;
+import com.gaji.mini.member.model.vo.*;
 
 public class GajiMenu {
 	Scanner sc = new Scanner(System.in);
 	private MemberManager memberManager = new MemberManager();
 
 	public void mainMenu() {
-		String menu = "==============\n1. 회원가입\n" + "2. 로그인\n" + "3. 회원탈퇴\n" + "4. 프로그램 종료\n==============";
+		String menu = "==============\n1. 구매자 회원가입\n" + "2. 사업자 회원가입\n" + "3. 회원 탈퇴\n" + "9. 전체 회원\n"
+				+ "0. 프로그램 종료\n==============";
 
 		ScreenClear.clearScreen(500);
 		while (true) {
@@ -24,58 +24,91 @@ public class GajiMenu {
 			switch (choice) {
 				case 1:
 					// TODO: 지금은 바로 가입이지만 판매자,구매자를 해당 메뉴에서 분리하든지 하위 메뉴로 가기
-					memberManager.addMember(inputMember());
+					memberManager.addMember(inputMember("buyer"));
 					break;
 
-			case 2:
-				System.out.println(memberManager.listMembers());
-				ScreenClear.clearScreen(3000);
-				break;
+				case 2:
+					memberManager.addMember(inputMember("seller"));
+					break;
 
-			case 3:
-				memberManager.listMembers();
+				case 3:
+					// * 판매자인지 구매자인지 선택 후 회원이 존재하는지 확인
+					// TODO: if(memberManger.UserExists())
+					memberManager.removeMember(inputMember());
+					break;
 
-				break;
+				case 9:
+						memberManager.listMembers();
+					ScreenClear.clearScreen(3000);
 
-			case 4:
-				break;
+					break;
 
-			default:
-				System.out.println("잘못 입력하셨습니다.");
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				case 0:
+					return;
+
+				default:
+					System.out.println("잘못 입력하셨습니다.");
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+			}
 		}
 	}
-}
 
-private Member inputMember() {
-	String id;
-	String name;
-	String pw;
-	int money;
+	private String inputID() {
+		System.out.print("ID: ");
+		return sc.next();
+	}
 
-	ScreenClear.clearScreen(0);
-	System.out.println("==== 회원가입 ====");
-	System.out.print("ID: ");
-	/**
-	 * TODO: ID 같으면 여기서 중복체크 바로 하고 중복 시 return; * id.euqals(member.getID() 하지 말고
-	 * key값으로 비교하기)
-	 */
-	id = sc.next();
-	System.out.print("Password: ");
-	pw = sc.next();
-	System.out.print("Name: ");
-	name = sc.next();
-	System.out.print("Money: ");
-	money = sc.nextInt();
-	ScreenClear.clearScreen(0);
-	// 사용자 입력을 받아서 Member객체 만들고, 리턴
-	// return new Member();
-	return new Buyer(id, pw, name, money);
-}
+	private String inputPW() {
+		System.out.print("PW: ");
+		return sc.next();
+	}
+
+	private String inputNmae() {
+		System.out.print("Name: ");
+		return sc.next();
+	}
+
+	private Member inputMember() {
+		String id;
+		String pw;
+		ScreenClear.clearScreen(0);
+		System.out.println("==== 회원탈퇴 ====");
+		id = inputID();
+		pw = inputPW();
+
+		return new Buyer(id, pw, null);
+	}
+
+	private Member inputMember(String memberType) {
+		String id;
+		String pw;
+		String name;
+
+		ScreenClear.clearScreen(0);
+		System.out.println("==== " + memberType + " 회원가입 ====");
+		id = inputID();
+		/**
+		 * TODO: ID 같으면 여기서 중복체크 바로 하고 중복 시 return; * id.equals(member.getID() 하지 말고
+		 * key값으로 비교하기)
+		 */
+
+		pw = inputPW();
+		name = inputNmae();
+		ScreenClear.clearScreen(0);
+		// 사용자 입력을 받아서 Member객체 만들고, 리턴
+		// return new Member();
+		if ("buyer".equals(memberType))
+			return new Buyer(id, pw, name);
+		else if ("seller".equals(memberType))
+			return new Seller(id, pw, name);
+		else
+			return null; // error
+
+	}
 }
 
 

@@ -2,7 +2,6 @@ package com.gaji.mini.member.controller;
 
 import java.io.*;
 import java.util.*;
-import java.util.Map;
 import java.util.Scanner;
 
 import com.gaji.mini.member.model.io.MemberIO;
@@ -21,7 +20,7 @@ public class MemberManager {
 		return oldMember;
 	}
 
-	public Member removMember(Member m) {
+	public Member removeMember(Member m) {
 		return members.remove(m.getID());
 	}
 

@@ -13,7 +13,11 @@ public class MemberIO {
 	public Map<String, Member> readFile() {
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new BufferedInputStream(new FileInputStream(dir + fileName)))) {
+
 			members = (HashMap<String, Member>) ois.readObject();
+			if (members == null) {
+				return new HashMap<>();
+			}
 			Set<String> keySet = members.keySet();
 			members.putAll(members);
 
@@ -21,6 +25,12 @@ public class MemberIO {
 				members.put(key, members.get(key));
 				System.out.println(members.get(key));
 			}
+		} catch (NullPointerException npe) {
+			return members;
+		} catch (FileNotFoundException fne) {
+			fne.printStackTrace();
+			writeFile(null);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,11 +46,13 @@ public class MemberIO {
 			System.out.println(members);
 			System.out.println("File saved: database/Members.dat");
 
+		} catch (NullPointerException npe) {
+			npe.printStackTrace();
+			return;
 		} catch (FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-
 	}
 }

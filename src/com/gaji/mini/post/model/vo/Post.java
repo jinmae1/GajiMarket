@@ -18,6 +18,13 @@ public class Post implements Serializable {
 	private boolean isSold;
 	private LocalDateTime postedAt;
 
+	// public Post(Item item, Seller postedBy, String title, String content) {
+	// this.item = item;
+	// this.postedBy = postedBy;
+	// this.title = title;
+	// this.content = content;
+	// }
+
 	public Post(int postNo, Item item, Seller postedBy, String title, String content) {
 		this.postNo = postNo;
 		this.item = item;

@@ -10,7 +10,7 @@ public class PostIO {
 	private String fileName = "Post.dat";
 	private Map<Integer, Post> posts;
 
-	public void readFile() {
+	public Map<Integer, Post> readFile() {
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new BufferedInputStream(new FileInputStream(dir + fileName)))) {
 
@@ -26,9 +26,11 @@ public class PostIO {
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		return posts;
 	}
 
-	public void writeFile() {
+	public void writeFile(Map<Integer, Post> addedPosts) {
+		posts = addedPosts;
 		try (ObjectOutputStream oos = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(dir + fileName)))) {
 
@@ -42,5 +44,4 @@ public class PostIO {
 			ioe.printStackTrace();
 		}
 	}
-
 }
