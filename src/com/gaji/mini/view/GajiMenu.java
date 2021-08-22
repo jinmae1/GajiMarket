@@ -10,6 +10,7 @@ import java.util.TreeMap;
 // import com.gaji.mini.game.UpDown;
 import com.gaji.mini.item.model.vo.Item;
 import com.gaji.mini.lib.ScreenClear;
+import com.gaji.mini.lib.TextColors;
 import com.gaji.mini.member.controller.MemberManager;
 import com.gaji.mini.member.model.vo.*;
 import com.gaji.mini.post.model.vo.Post;
@@ -74,7 +75,9 @@ public class GajiMenu {
 					return;
 
 				default:
-					System.out.println("잘못 입력하셨습니다.");
+					System.out.println(TextColors.colorText("잘못 입력하셨습니다.", TextColors.CYAN));
+
+					// System.out.println("잘못 입력하셨습니다.");
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
@@ -152,6 +155,7 @@ public class GajiMenu {
 		System.out.println(gamemenu);
 		System.out.print("> 입력: ");
 		int choice = sc.nextInt();
+		int point = 0;
 
 		while (true) {
 
@@ -165,6 +169,8 @@ public class GajiMenu {
 					break;
 
 				case 3:
+					// point = game();
+					System.out.println("몇점입니다." + point);
 
 					break;
 

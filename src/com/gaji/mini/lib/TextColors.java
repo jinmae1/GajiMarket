@@ -15,6 +15,10 @@ public class TextColors {
 		return str.replace(str.substring(beginIndex, endIndex), color + str.substring(beginIndex, endIndex) + RESET);
 	}
 
+	public static String colorText(String str, String color) {
+		return str.replace(str, color + str + RESET);
+	}
+
 	public static String colorText(String str, int beginIndex, String color) {
 		return str.replace(str.substring(beginIndex), color + str.substring(beginIndex) + RESET);
 	}

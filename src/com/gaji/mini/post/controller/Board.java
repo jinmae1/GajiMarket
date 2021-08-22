@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.gaji.mini.member.controller.MemberManager;
 import com.gaji.mini.member.model.io.MemberIO;
+import com.gaji.mini.member.model.vo.Buyer;
 import com.gaji.mini.member.model.vo.Seller;
 import com.gaji.mini.post.model.io.PostIO;
 import com.gaji.mini.post.model.vo.Post;
@@ -54,6 +55,27 @@ public class Board {
 	public Map<Integer, Post> listPosts() {
 		posts.putAll(pio.readFile());
 		return posts;
+	}
+
+	public void buyItem(Buyer b, int postNo) {
+		posts.putAll(pio.readFile());
+		Post temp = posts.get(postNo);
+
+		Seller s = (Seller) memberManager.getMember(temp.getPostedBy());
+		if (!temp.isSold()) {
+
+			if (temp.getItem().getPrice() <= memberManager.getMoney(b)) {
+				memberManager.withdraw(b, temp.getItem().getPrice());
+				memberManager.charge(s, temp.getItem().getPrice());
+
+				// ((Seller) memberManager.getMember(s.getID())).removeFromPostedList(postNo);
+				// memberManager.charge(memberManager.getMember(), money);
+				posts.get(temp.getPostNo()).setSold(true);
+				pio.writeFile(posts);
+			} else
+				System.out.println("잔액이 부족합니다.");
+		} else
+			System.out.println("판매완료된 상품입니다.");
 	}
 
 }

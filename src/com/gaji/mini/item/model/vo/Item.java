@@ -11,11 +11,11 @@ public class Item implements Serializable {
 		this.price = price;
 	}
 
-	public String getID() {
+	public String getName() {
 		return name;
 	}
 
-	public void setID(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

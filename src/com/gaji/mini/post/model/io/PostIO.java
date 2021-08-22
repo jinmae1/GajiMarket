@@ -23,7 +23,7 @@ public class PostIO {
 
 			for (Integer key : keySet) { // key == postNo
 				posts.put(key, posts.get(key));
-				System.out.println(posts.get(key));
+				// System.out.println(posts.get(key));
 			}
 		} catch (NullPointerException npe) {
 			return posts;

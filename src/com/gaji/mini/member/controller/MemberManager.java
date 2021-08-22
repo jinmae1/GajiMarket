@@ -33,8 +33,7 @@ public class MemberManager {
 	}
 
 	public boolean checkPassword(Member m, String password) {
-		if (password.equals(m.getPw()))
-		{
+		if (password.equals(m.getPw())) {
 			System.out.println(m.getPw());
 			return true;
 		}
@@ -72,6 +71,26 @@ public class MemberManager {
 		return null;
 	}
 
+	public void charge(Member m, int money) {
+		// m.charge(money);
+		members.putAll(mio.readFile());
+		Member target = members.get(m.getID());
+		target.setMoney(target.getMoney() + money);
+		addMember(target);
+	}
+
+	public void withdraw(Member m, int money) {
+		members.putAll(mio.readFile());
+		Member target = members.get(m.getID());
+		target.setMoney(target.getMoney() - money);
+		addMember(target);
+	}
+
+	public int getMoney(Member m) {
+		members.putAll(mio.readFile());
+		return members.get(m.getID()).getMoney();
+	}
+
 	// Scanner sc = new Scanner(System.in);
 	// final String dir = "database/";
 	// final String file = "board.txt";
@@ -99,7 +118,6 @@ public class MemberManager {
 	// buyer.put("456", new Member());
 	// }
 
-
 	// /*
 	// * 컨트롤러
 	// *
@@ -121,135 +139,133 @@ public class MemberManager {
 	// System.out.println("id 등록 : ");
 	// String id = sc.next();
 
-// buyer.put(id, new Member());
+	// buyer.put(id, new Member());
 
-// System.out.println("등록 완료");
-// break;
-// }
+	// System.out.println("등록 완료");
+	// break;
+	// }
 
-// else if ("판매자".equals(sellbuy)) {
-// System.out.println("id 등록 : ");
-// String id = sc.next();
+	// else if ("판매자".equals(sellbuy)) {
+	// System.out.println("id 등록 : ");
+	// String id = sc.next();
 
-// seller.put(id, new Member());
+	// seller.put(id, new Member());
 
-// System.out.println("등록 완료");
-// break;
-// } else {
-// System.out.println("잘못 입력하셨습니다.");
-// continue;
-// }
-// }
-// }
+	// System.out.println("등록 완료");
+	// break;
+	// } else {
+	// System.out.println("잘못 입력하셨습니다.");
+	// continue;
+	// }
+	// }
+	// }
 
-// // 게시글 보기
-// public void fileview() {
-// Map<Integer, Member> boardview = null;
+	// // 게시글 보기
+	// public void fileview() {
+	// Map<Integer, Member> boardview = null;
 
-// try {
-// ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new
-// FileInputStream(dir + file)));
-// boardview = (Map<Integer, Member>) ois.readObject();
-// for (int i = 0; i < boardview.size(); i++) {
-// System.out.println(boardview.toString());
-// }
+	// try {
+	// ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new
+	// FileInputStream(dir + file)));
+	// boardview = (Map<Integer, Member>) ois.readObject();
+	// for (int i = 0; i < boardview.size(); i++) {
+	// System.out.println(boardview.toString());
+	// }
 
-// } catch (FileNotFoundException e) {
-// e.printStackTrace();
-// } catch (IOException e) {
-// e.printStackTrace();
-// } catch (ClassNotFoundException e) {
-// // TODO Auto-generated catch block
-// e.printStackTrace();
-// }
+	// } catch (FileNotFoundException e) {
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// } catch (ClassNotFoundException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
 
-// }
+	// }
 
-// // 게시글 쓰기 //
-// public void filewrite() {
-// ​
-// try(
-// FileWriter fw = new FileWriter(file, true);
-// ObjectOutputStream oos = new ObjectOutputStream(new
-// FileOutputStream(dir+file));
-// ){
+	// // 게시글 쓰기 //
+	// public void filewrite() {
+	// ​
+	// try(
+	// FileWriter fw = new FileWriter(file, true);
+	// ObjectOutputStream oos = new ObjectOutputStream(new
+	// FileOutputStream(dir+file));
+	// ){
 
-// oos.writeObject(board);
-// System.out.println(file+"저장 완료");
-// // 실제파일에 쓰기
-// } catch (IOException e) {
-// e.printStackTrace();
+	// oos.writeObject(board);
+	// System.out.println(file+"저장 완료");
+	// // 실제파일에 쓰기
+	// } catch (IOException e) {
+	// e.printStackTrace();
 
-// }
-// }
+	// }
+	// }
 
-// // 충전
-// public int chargingMoney() {
+	// // 충전
+	// public int chargingMoney() {
 
-// System.out.println("판매자와 구매자 선택 : ");
-// String sellbuy= sc.next();
-// System.out.println("id 입력 : ");
-// String id = sc.next();
+	// System.out.println("판매자와 구매자 선택 : ");
+	// String sellbuy= sc.next();
+	// System.out.println("id 입력 : ");
+	// String id = sc.next();
 
-// if("구매자".equals(sellbuy)) {
+	// if("구매자".equals(sellbuy)) {
 
-// for(String key : buyer.keySet())
-// if(id.contains(buyer.get(key).getID())) {
-// return buyer.get(key).getMoney() += 1000;
-// }
-		
-// System.out.println("충전 완료");
-// break;
-// }
+	// for(String key : buyer.keySet())
+	// if(id.contains(buyer.get(key).getID())) {
+	// return buyer.get(key).getMoney() += 1000;
+	// }
 
-// else if("판매자".equals(sellbuy)) {
-// System.out.println("id 등록 : ");
-// String id = sc.next();
+	// System.out.println("충전 완료");
+	// break;
+	// }
 
-// seller.put(id, new Member());
+	// else if("판매자".equals(sellbuy)) {
+	// System.out.println("id 등록 : ");
+	// String id = sc.next();
 
-// System.out.println("등록 완료");
-// break;
-// }
-// else{
-// System.out.println("잘못 입력하셨습니다.");
-// continue;
-// }
+	// seller.put(id, new Member());
 
-// // for(int i = 0 ; i<member.memberList.size(); i++) {
-// // if(id.equals(member.memberList.get(i).getID())) {
-// // return member.memberList.get(i).setMoney() += 1000; //1000원 충전
-// // }
-// // }
+	// System.out.println("등록 완료");
+	// break;
+	// }
+	// else{
+	// System.out.println("잘못 입력하셨습니다.");
+	// continue;
+	// }
 
-// }
+	// // for(int i = 0 ; i<member.memberList.size(); i++) {
+	// // if(id.equals(member.memberList.get(i).getID())) {
+	// // return member.memberList.get(i).setMoney() += 1000; //1000원 충전
+	// // }
+	// // }
 
-// // 구매 // 구매 후 게시글했던 글 삭제?
-// public void buy(String str) {
+	// }
 
-// for (int i = 0; i < member.memberList.size(); i++) {
-// if (str.equals(member.memberList.get(i).getItem())) {
-// System.out.println(
-// member.memberList.get(i).getID() + " 의" + member.memberList.get(i).getItem()
-// + "판매 완료");
-// member.memberList.get(i).getItem() = null;
-// }
-// }
-// // TODO: 판매자 돈 + , 구매자 돈 -
+	// // 구매 // 구매 후 게시글했던 글 삭제?
+	// public void buy(String str) {
 
-// }
+	// for (int i = 0; i < member.memberList.size(); i++) {
+	// if (str.equals(member.memberList.get(i).getItem())) {
+	// System.out.println(
+	// member.memberList.get(i).getID() + " 의" + member.memberList.get(i).getItem()
+	// + "판매 완료");
+	// member.memberList.get(i).getItem() = null;
+	// }
+	// }
+	// // TODO: 판매자 돈 + , 구매자 돈 -
 
-// // 인출
-// public int withdraw(String id, int money) {
+	// }
 
-// for (int i = 0; i < member.memberList.size(); i++) {
-// if (id.equals(member.memberList.get(i).getID())) {
-// return member.memberList.get(i).setMoney() -= money; // 1000원 충전
-// }
-// }
+	// // 인출
+	// public int withdraw(String id, int money) {
 
+	// for (int i = 0; i < member.memberList.size(); i++) {
+	// if (id.equals(member.memberList.get(i).getID())) {
+	// return member.memberList.get(i).setMoney() -= money; // 1000원 충전
+	// }
+	// }
 
-// }
-
+	// }
 
 }

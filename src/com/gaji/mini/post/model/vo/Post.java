@@ -74,11 +74,11 @@ public class Post implements Serializable {
 		this.content = content;
 	}
 
-	public boolean isIsSold() {
+	public boolean isSold() {
 		return this.isSold;
 	}
 
-	public void setIsSold(boolean isSold) {
+	public void setSold(boolean isSold) {
 		this.isSold = isSold;
 	}
 

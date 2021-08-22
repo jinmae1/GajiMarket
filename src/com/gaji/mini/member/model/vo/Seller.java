@@ -11,14 +11,14 @@ import com.gaji.mini.post.model.vo.Post;
 public class Seller extends Member {
 
 	private float manner = 36.5f;
-	private List<String> sellList;
+	private List<Item> sellList;
 	private List<Integer> postedList = new ArrayList<>();
 
 	public Seller(String ID, String pw, String name) {
 		super(ID, pw, name);
 	}
 
-	public List<String> getSellList() {
+	public List<Item> getSellList() {
 		return sellList;
 	}
 
@@ -27,7 +27,8 @@ public class Seller extends Member {
 	}
 
 	public void addToSellList(Item item) {
-		addToSellList(item);
+		// addToSellList(item);
+		sellList.add(item);
 	}
 
 	public void addToPostedList(int postNo) {

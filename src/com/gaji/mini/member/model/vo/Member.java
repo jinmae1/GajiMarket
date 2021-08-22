@@ -38,7 +38,7 @@ public abstract class Member implements Serializable {
 		this.pw = pw;
 	}
 
-	public long getMoney() {
+	public int getMoney() {
 		return money;
 	}
 
