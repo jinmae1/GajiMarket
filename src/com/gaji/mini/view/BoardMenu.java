@@ -1,6 +1,8 @@
 package com.gaji.mini.view;
 
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import com.gaji.mini.item.model.vo.Item;
 import com.gaji.mini.lib.ScreenClear;
@@ -46,7 +48,7 @@ public class BoardMenu {
 
 			switch (choice) {
 				case 1:
-					board.listPosts();
+					sort(board.listPosts());
 					// 게시판 조회
 					int postNo = selectPostNo();
 					showPost(postNo);
@@ -67,7 +69,7 @@ public class BoardMenu {
 					System.out.print("postNo: ");
 					int selectedNo = sc.nextInt();
 					System.out.println("%%%%%%");
-					System.out.println(board.deletePost((Seller) currentUser, postNo));
+					// System.out.println(board.deletePost((Seller) currentUser, postNo));
 					// 삭제
 					System.out.println("%%%%%%");
 					break;
@@ -85,6 +87,12 @@ public class BoardMenu {
 					}
 			}
 		}
+	}
+
+	private void sort(Map<Integer, Post> p) {
+		Map<Integer, Post> pMap = new TreeMap<>(p);
+		for (Integer key : pMap.keySet())
+			System.out.println(pMap.get(key));
 	}
 
 	private void showPost(int postNo) {

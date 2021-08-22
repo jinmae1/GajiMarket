@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 // import com.gaji.mini.game.RockPaperScissors;
 // import com.gaji.mini.game.UpDown;
@@ -138,13 +139,9 @@ public class GajiMenu {
 
 	private void sort(Map<String, Member> m) {
 
-		List<String> keyList = new ArrayList<>(m.keySet());
-		keyList.sort((s1, s2) -> s1.compareTo(s2));
-		for (String key : keyList) {
-			m.put(key, m.get(key));
-			System.out.println(m.put(key, m.get(key)));
-		}
-
+		Map<String, Member> keymap = new TreeMap<>(m);
+		for (String key : keymap.keySet())
+			System.out.println(keymap.get(key));
 	}
 
 	public void GameMenu() {

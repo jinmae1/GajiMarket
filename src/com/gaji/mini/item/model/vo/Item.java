@@ -27,4 +27,9 @@ public class Item implements Serializable {
 		this.price = price;
 	}
 
+	@Override
+	public String toString() {
+		return "Item [name=" + name + ", price=" + price + "]";
+	}
+
 }
