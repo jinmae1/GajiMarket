@@ -160,7 +160,7 @@ public class GajiMenu {
 			else if ("Buyer".equals(type))
 				type = TextColors.colorText(type, TextColors.RED);
 
-			System.out.printf("%s\t\t%s\t\t%s\t%s%n", type, temp.getID(), temp.getName(),
+			System.out.printf("%s\t\t%s\t\t%s\t\t%s%n", type, temp.getID(), temp.getName(),
 					TextColors.YELLOW + temp.getPw() + TextColors.RESET);
 			// System.out.println(TextColors.colorText(keymap.get(key).toString(),
 			// TextColors.GREEN));

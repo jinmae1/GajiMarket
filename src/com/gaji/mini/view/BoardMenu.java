@@ -208,11 +208,12 @@ public class BoardMenu {
 			if (temp == null) {
 				break;
 			}
+			String name = memberManager.getMember(temp.getPostedBy()).getName();
 			// 여기서 보여주고 사용자가 돌아가기(ex -1 등을 누르면 게시판 메뉴로 가기)
 			System.out.println(TextColors.GREEN + "글 번호: " + temp.getPostNo() + "\t작성 시각: " + temp.getPostedAt() + "\n"
-					+ "제목: " + temp.getTitle() + "\n==========================\n" + TextColors.YELLOW
-					+ temp.getItem().getName() + " (" + temp.getItem().getPrice() + "원)\n\n" + TextColors.RESET
-					+ "내용: \n" + temp.getContent());
+					+ "\n작성자: " + name + "(" + temp.getPostedBy() + ")" + "\n" + "제목: " + temp.getTitle()
+					+ "\n==========================\n" + TextColors.YELLOW + temp.getItem().getName() + " ("
+					+ temp.getItem().getPrice() + "원)\n\n" + TextColors.RESET + "내용: \n" + temp.getContent());
 
 			System.out.print("\n> 게시판으로 돌아가기(0): ");
 			if (sc.nextInt() == 0) {
