@@ -170,17 +170,16 @@ public class GajiMenu {
 	}
 
 	public int GameMenu() {
-		String gamemenu = "==============\n1. 가위바위보\n" + "2. 업다운\n" + "3. 369게임\n" + "4. 구구단게임\n"
-				+ "0. 돌아가기\n==============";
-		ScreenClear.clearScreen(500);
-
-		System.out.println(gamemenu);
-		System.out.print("> 입력: ");
-		int choice = sc.nextInt();
 		int point = 0;
 		int total = 0;
-
 		while (true) {
+			String gamemenu = "==============\n1. 가위바위보\n" + "2. 업다운\n" + "3. 369게임\n" + "4. 구구단게임\n"
+					+ "0. 돌아가기\n==============";
+			ScreenClear.clearScreen(500);
+
+			System.out.println(gamemenu);
+			System.out.print("> 입력: ");
+			int choice = sc.nextInt();
 
 			switch (choice) {
 				case 1:
