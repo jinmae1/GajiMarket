@@ -19,7 +19,7 @@ import com.gaji.mini.post.model.vo.Post;
 public class BoardMenu {
 	Scanner sc = new Scanner(System.in);
 	private Board board = new Board();
-	private MemberManager membermManager = new MemberManager();
+	private MemberManager memberManager = new MemberManager();
 	private Member currentUser;
 	private Seller currentSeller;
 	private Buyer currentBuyer;
@@ -39,6 +39,7 @@ public class BoardMenu {
 			this.currentBuyer = (Buyer) logInMember;
 			menu = menu.replace("OO", "구매");
 			menu = menu.replace("XX", "충전");
+			menu = menu.replace("상품 삭제", "포인트 충전");
 			// menu = "==============\n1. 게시판 조회\n" + "2. 상품 구매\n" + "3. 정보 조회\n" + "4. 포인트
 			// 벌기";
 		}
@@ -68,9 +69,14 @@ public class BoardMenu {
 
 						// }
 						// 게시글 내용 조회
-						int postNo = selectPostNo();
-						while (showPost(postNo) != 0) {
+						while (true) {
 
+							int postNo = selectPostNo();
+							if (postNo == 0) {
+								break;
+							}
+							showPost(postNo);
+							sort(board.listPosts());
 						}
 						break;
 
@@ -87,7 +93,7 @@ public class BoardMenu {
 					case 3:
 						ScreenClear.clearScreen(0);
 						showUserInfo(currentUser);
-						System.out.println("소지금: " + membermManager.getMoney(currentUser) + "원\n");
+						System.out.println("소지금: " + memberManager.getMoney(currentUser) + "원\n");
 						// 로그인 유저 정보 출력
 
 						if (currentSeller != null) {
@@ -109,12 +115,12 @@ public class BoardMenu {
 						if (currentBuyer != null) {
 
 							System.out.print("충전할 금액: ");
-							membermManager.charge(currentUser, sc.nextInt());
-							System.out.println("현재 금액: " + membermManager.getMoney(currentUser) + "원");
+							memberManager.charge(currentUser, sc.nextInt());
+							System.out.println("현재 금액: " + memberManager.getMoney(currentUser) + "원");
 						} else if (currentSeller != null) {
 							System.out.println("인출할 금액: ");
-							membermManager.withdraw(currentUser, sc.nextInt());
-							System.out.println("현재 금액: " + membermManager.getMoney(currentUser) + "원");
+							memberManager.withdraw(currentUser, sc.nextInt());
+							System.out.println("현재 금액: " + memberManager.getMoney(currentUser) + "원");
 						}
 						break;
 
@@ -125,7 +131,8 @@ public class BoardMenu {
 							System.out.println(board.deletePost((Seller) currentUser, selectedNo));
 							// 삭제
 						} else if (currentBuyer != null) {
-
+							int point = new GajiMenu().GameMenu();
+							memberManager.charge(currentUser, point);
 						}
 						break;
 
@@ -193,28 +200,42 @@ public class BoardMenu {
 		}
 	}
 
-	private int showPost(int postNo) {
-		ScreenClear.clearScreen(0);
-		Post temp = board.getPost(postNo);
-		// 여기서 보여주고 사용자가 돌아가기(ex -1 등을 누르면 게시판 메뉴로 가기)
-		System.out.println("글 번호: " + temp.getPostNo() + "\n" + "제목: " + temp.getTitle() + "\n======================\n"
-				+ temp.getItem().getName() + " (" + temp.getItem().getPrice() + "원)\n\n" + "내용: " + temp.getContent());
+	private void showPost(int postNo) {
+		while (true) {
 
-		System.out.print("\n> 돌아가기(9): ");
-		// TODO: 여기 고치기
-		return sc.nextInt(); // 767676
+			ScreenClear.clearScreen(0);
+			Post temp = board.getPost(postNo);
+			if (temp == null) {
+				break;
+			}
+			// 여기서 보여주고 사용자가 돌아가기(ex -1 등을 누르면 게시판 메뉴로 가기)
+			System.out.println(TextColors.GREEN + "글 번호: " + temp.getPostNo() + "\t작성 시각: " + temp.getPostedAt() + "\n"
+					+ "제목: " + temp.getTitle() + "\n==========================\n" + TextColors.YELLOW
+					+ temp.getItem().getName() + " (" + temp.getItem().getPrice() + "원)\n\n" + TextColors.RESET
+					+ "내용: \n" + temp.getContent());
+
+			System.out.print("\n> 게시판으로 돌아가기(0): ");
+			if (sc.nextInt() == 0) {
+				break;
+			}
+			// TODO: 여기 고치기
+		}
 
 	}
 
 	private int selectPostNo() {
 		// 스캐너로 입력받고 입력 받은 값을 리턴
-		System.out.print("\n> 게시글 선택(No): ");
+		while (true) {
 
-		return sc.nextInt();
+			System.out.println("\n돌아가기: (0)\t게시글 선택(No)");
+			System.out.print("> 입력: ");
+
+			return sc.nextInt();
+		}
 	}
 
 	private void showUserInfo(Member m) {
-		System.out.println(membermManager.getMember(m.getID()));
+		System.out.println(memberManager.getMember(m.getID()));
 		// System.out.println(m);
 	}
 
@@ -243,8 +264,17 @@ public class BoardMenu {
 		System.out.print("제목: ");
 		title = sc.nextLine();
 
-		System.out.print("내용: ");
-		content = sc.nextLine();
+		System.out.println("내용: (입력이 끝나면 exit)");
+		String str = "";
+		while (true) {
+			content = sc.nextLine();
+			if ("exit".equals(content)) {
+				System.out.println("내용 입력 끝!");
+				break;
+			}
+			str += content + "\n";
+		}
+		content = str;
 
 		s.addToPostedList(postNo);
 		System.out.println("_______++++++++++++++____________________");

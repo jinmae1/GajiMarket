@@ -14,6 +14,10 @@ import com.gaji.mini.lib.TextColors;
 import com.gaji.mini.member.controller.MemberManager;
 import com.gaji.mini.member.model.vo.*;
 import com.gaji.mini.post.model.vo.Post;
+import com.games.Game_369;
+import com.games.RockPaperScissors;
+import com.games.UpDown;
+import com.games.gugudan;
 
 public class GajiMenu {
 	Scanner sc = new Scanner(System.in);
@@ -165,8 +169,8 @@ public class GajiMenu {
 
 	}
 
-	public void GameMenu() {
-		String gamemenu = "==============\n1. 가위바위보\n" + "2. 업다운\n" + "3. ㅁㅁㅁ\n" + "4. ㅁㅁㅁ\n"
+	public int GameMenu() {
+		String gamemenu = "==============\n1. 가위바위보\n" + "2. 업다운\n" + "3. 369게임\n" + "4. 구구단게임\n"
 				+ "0. 돌아가기\n==============";
 		ScreenClear.clearScreen(500);
 
@@ -174,30 +178,43 @@ public class GajiMenu {
 		System.out.print("> 입력: ");
 		int choice = sc.nextInt();
 		int point = 0;
+		int total = 0;
 
 		while (true) {
 
 			switch (choice) {
 				case 1:
-					// new RockPaperScissors().Start();
+					ScreenClear.clearScreen(0);
+					point = new RockPaperScissors().Start() * 100;
+					System.out.println(point + "점입니다.");
+					total += point;
+
 					break;
 
 				case 2:
-					// new UpDown().Start();
+					ScreenClear.clearScreen(0);
+					point = new UpDown().Start() * 100;
+					System.out.println(point + "점입니다.");
+					total += point;
 					break;
 
 				case 3:
-					// point = game();
-					System.out.println("몇점입니다." + point);
-
+					ScreenClear.clearScreen(0);
+					point = new Game_369().Start() * 100;
+					System.out.println(point + "점입니다.");
+					total += point;
 					break;
 
 				case 4:
-
+					ScreenClear.clearScreen(0);
+					point = new gugudan().Start() * 100;
+					System.out.println(point + "점입니다.");
+					total += point;
 					break;
 
 				case 0:
-					return;
+					System.out.println("총 점수: " + total);
+					return total;
 				// break;
 
 				default:
