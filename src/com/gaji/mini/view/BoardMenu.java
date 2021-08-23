@@ -54,74 +54,81 @@ public class BoardMenu {
 			System.out.print("> 입력: ");
 			int choice = sc.nextInt();
 
-			switch (choice) {
-				case 1:
-					sort(board.listPosts());
-					// Map<Integer, Post> posts = board.listPosts();
-					// for (Integer key : posts.keySet()) {
-					// Post p = posts.get(key);
-					// System.out.println("번호: " + p.getPostNo() + "\t" + "제목: " + p.getTitle() +
-					// "\t" + "상품이름: "
-					// + p.getItem().getName());
+			try {
 
-					// }
-					// 게시글 내용 조회
-					int postNo = selectPostNo();
-					showPost(postNo);
-					break;
+				switch (choice) {
+					case 1:
+						sort(board.listPosts());
+						// Map<Integer, Post> posts = board.listPosts();
+						// for (Integer key : posts.keySet()) {
+						// Post p = posts.get(key);
+						// System.out.println("번호: " + p.getPostNo() + "\t" + "제목: " + p.getTitle() +
+						// "\t" + "상품이름: "
+						// + p.getItem().getName());
 
-				case 2:
-					if (currentSeller != null)
-						board.createPost(currentSeller, writePost(currentSeller));
-					// 상품 등록
-					if (currentBuyer != null) {
-						System.out.print("구매할 상품 번호");
-						board.buyItem(currentBuyer, sc.nextInt());
-					}
-					break;
+						// }
+						// 게시글 내용 조회
+						int postNo = selectPostNo();
+						showPost(postNo);
+						break;
 
-				case 3:
-					showUserInfo(currentUser);
-					System.out.println(membermManager.getMoney(currentUser) + "원");
-					// 로그인 유저 정보 출력
+					case 2:
+						if (currentSeller != null)
+							board.createPost(currentSeller, writePost(currentSeller));
+						// 상품 등록
+						if (currentBuyer != null) {
+							System.out.print("구매할 상품 번호");
+							board.buyItem(currentBuyer, sc.nextInt());
+						}
+						break;
 
-					if (currentSeller != null) {
-						System.out.println(currentSeller.getPostedList());
-						for (Integer postKey : currentSeller.getPostedList())
-							System.out.println(board.getPost(Integer.valueOf(postKey)));
-					}
+					case 3:
+						showUserInfo(currentUser);
+						System.out.println(membermManager.getMoney(currentUser) + "원");
+						// 로그인 유저 정보 출력
 
-					// if (currentBuyer != null)
-					// System.out.println(membermManager.getMoney(currentUser) + "원");
+						if (currentSeller != null) {
+							System.out.println(currentSeller.getPostedList());
+							for (Integer postKey : currentSeller.getPostedList())
+								System.out.println(board.getPost(Integer.valueOf(postKey)));
+						}
 
-					break;
+						// if (currentBuyer != null)
+						// System.out.println(membermManager.getMoney(currentUser) + "원");
 
-				case 4:
-					System.out.print("충전금액: ");
-					membermManager.charge(currentUser, sc.nextInt());
-					System.out.println("현재 금액: " + membermManager.getMoney(currentUser) + "원");
-					break;
+						break;
 
-				case 5:
-					System.out.print("postNo: ");
-					int selectedNo = sc.nextInt();
-					System.out.println(board.deletePost((Seller) currentUser, selectedNo));
-					// 삭제
-					break;
+					case 4:
+						System.out.print("충전금액: ");
+						membermManager.charge(currentUser, sc.nextInt());
+						System.out.println("현재 금액: " + membermManager.getMoney(currentUser) + "원");
+						break;
 
-				case 0:
-					currentBuyer = null;
-					currentSeller = null;
-					return;
+					case 5:
+						if (currentSeller != null) {
+							System.out.print("postNo: ");
+							int selectedNo = sc.nextInt();
+							System.out.println(board.deletePost((Seller) currentUser, selectedNo));
+							// 삭제
+						}
+						break;
 
-				default:
-					System.out.println("잘못 입력하셨습니다.");
-					try {
+					case 0:
+						currentBuyer = null;
+						currentSeller = null;
+						return;
 
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					default:
+						System.out.println("잘못 입력하셨습니다.");
+						try {
+
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+				}
+			} catch (NullPointerException e) {
+
 			}
 		}
 
@@ -133,10 +140,10 @@ public class BoardMenu {
 			Post post = pMap.get(key);
 			if (post.isSold())
 				System.out.println(post.getPostNo() + ". " + post.getTitle() + " " + post.getPostedBy() + " "
-						+ post.getItem().getPrice() + TextColors.colorText("판매완료", TextColors.PURPLE));
+						+ post.getPostedAt() + " " + TextColors.colorText("판매완료", TextColors.PURPLE));
 			else
 				System.out.println(post.getPostNo() + ". " + post.getTitle() + " " + post.getPostedBy() + " "
-						+ post.getItem().getPrice() + "판매중");
+						+ post.getPostedAt() + " " + "판매중");
 			// TODO: postedby의 toSTring 수정
 		}
 	}

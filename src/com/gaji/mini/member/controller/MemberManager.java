@@ -41,7 +41,7 @@ public class MemberManager {
 	}
 
 	// 멤버를 리스트로 반환하는 게 아니라 멤버의 목록(list)을 보여주는 함수
-	public Map<String, Member> listMembers() {
+	public Map<String, Member> listMembers() throws NullPointerException {
 		members.putAll(mio.readFile());
 		return members;
 	}

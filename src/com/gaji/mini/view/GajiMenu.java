@@ -29,60 +29,66 @@ public class GajiMenu {
 			System.out.print("> 입력: ");
 			int choice = sc.nextInt();
 
-			switch (choice) {
-				case 1:
-					memberManager.addMember(inputMember("buyer"));
-					break;
+			try {
 
-				case 2:
-					memberManager.addMember(inputMember("seller"));
-					break;
+				switch (choice) {
+					case 1:
+						memberManager.addMember(inputMember("buyer"));
+						break;
 
-				case 3:
-					System.out.println(memberManager.removeMember(inputID(), inputPW()));
-					break;
+					case 2:
+						memberManager.addMember(inputMember("seller"));
+						break;
 
-				case 4:
-					// TODO: 로그인 후 화면 만들기
-					String id = inputID();
-					String pw = inputPW();
-					String memberType;
-					Member logInMember = memberManager.getMember(id);
-					System.out.println("___________________________");
-					System.out.println(logInMember);
-					// memberType = memberManager.checkMemberType(id);
-					if (memberManager.checkPassword(logInMember, pw))
-						new BoardMenu(logInMember).boardMenu();
-					// if ("buyer".equals(memberType)) {
-					// System.out.println(memberManager.getMember(id));
-					// } else if ("seller".equals(memberType)) {
-					// seller = (Seller) memberManager.getMember(id);
-					// }
+					case 3:
+						System.out.println(memberManager.removeMember(inputID(), inputPW()));
+						break;
 
-					break;
+					case 4:
+						// TODO: 로그인 후 화면 만들기
+						String id = inputID();
+						String pw = inputPW();
+						String memberType;
+						Member logInMember = memberManager.getMember(id);
+						System.out.println("___________________________");
+						System.out.println(logInMember);
+						// memberType = memberManager.checkMemberType(id);
+						if (memberManager.checkPassword(logInMember, pw))
+							new BoardMenu(logInMember).boardMenu();
+						// if ("buyer".equals(memberType)) {
+						// System.out.println(memberManager.getMember(id));
+						// } else if ("seller".equals(memberType)) {
+						// seller = (Seller) memberManager.getMember(id);
+						// }
 
-				case 5:
-					GameMenu();
-					break;
+						break;
 
-				case 9:
-					sort(memberManager.listMembers());
-					// ScreenClear.clearScreen(3000);
+					case 5:
+						GameMenu();
+						break;
 
-					break;
+					case 9:
+						sort(memberManager.listMembers());
+						// ScreenClear.clearScreen(3000);
 
-				case 0:
-					return;
+						break;
 
-				default:
-					System.out.println(TextColors.colorText("잘못 입력하셨습니다.", TextColors.CYAN));
+					case 0:
+						return;
 
-					// System.out.println("잘못 입력하셨습니다.");
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					default:
+						// System.out.println(TextColors.colorText("잘못 입력하셨습니다.", TextColors.CYAN));
+						System.out.println(TextColors.colorText("잘못 입력하셨습니다.", 3, 5, TextColors.CYAN));
+
+						// System.out.println("잘못 입력하셨습니다.");
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+				}
+			} catch (NullPointerException e) {
+
 			}
 		}
 	}
@@ -143,8 +149,11 @@ public class GajiMenu {
 	private void sort(Map<String, Member> m) {
 
 		Map<String, Member> keymap = new TreeMap<>(m);
-		for (String key : keymap.keySet())
-			System.out.println(keymap.get(key));
+		ScreenClear.clearScreen(0);
+		for (String key : keymap.keySet()) {
+			System.out.println(TextColors.colorText(keymap.get(key).toString(), TextColors.GREEN));
+
+		}
 	}
 
 	public void GameMenu() {

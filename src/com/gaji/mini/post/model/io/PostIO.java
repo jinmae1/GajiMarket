@@ -30,6 +30,7 @@ public class PostIO {
 		} catch (FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
 			writeFile(null);
+			System.out.println("파일생성");
 
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();

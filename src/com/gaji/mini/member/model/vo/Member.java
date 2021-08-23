@@ -3,6 +3,7 @@ package com.gaji.mini.member.model.vo;
 import java.io.Serializable;
 
 import com.gaji.mini.item.model.vo.Item;
+import com.gaji.mini.lib.TextColors;
 
 public abstract class Member implements Serializable {
 
@@ -56,7 +57,8 @@ public abstract class Member implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("Type: %s\tID: %s\t Name: %s\tpw:%s", this.getClass().getSimpleName(), ID, name, pw);
+		return String.format("Type: %s\tID: %s\t Name: %s\tpw:%s", this.getClass().getSimpleName(), ID, name,
+				TextColors.colorText(pw, TextColors.YELLOW));
 	}
 
 }

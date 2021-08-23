@@ -1,5 +1,6 @@
 package com.gaji.mini.post.controller;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import com.gaji.mini.member.controller.MemberManager;
@@ -22,6 +23,7 @@ public class Board {
 	// * create의 리턴값은 hashMap put의 리턴값과 동일(view에서 put 성공 여부에 사용)
 	public Post createPost(Seller s, Post p) {
 		Post oldPost;
+		p.setPostedAt(LocalDateTime.now());
 		posts = pio.readFile();
 		oldPost = posts.put(p.getPostNo(), p); // ! 여기서 p.getPost()를 하면 안됨
 		pio.writeFile(posts);
@@ -52,7 +54,7 @@ public class Board {
 	// TODO: editPost 작성
 	// * 단 게시번호는 수정 불가
 
-	public Map<Integer, Post> listPosts() {
+	public Map<Integer, Post> listPosts() throws NullPointerException {
 		posts.putAll(pio.readFile());
 		return posts;
 	}

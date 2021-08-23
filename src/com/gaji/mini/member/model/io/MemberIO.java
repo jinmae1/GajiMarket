@@ -30,6 +30,7 @@ public class MemberIO {
 		} catch (FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
 			writeFile(null);
+			System.out.println("파일생성");
 
 		} catch (Exception e) {
 			e.printStackTrace();
