@@ -29,7 +29,7 @@ public class Item implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Item [name=" + name + ", price=" + price + "]";
+		return name + "(" + price + "원)";
 	}
 
 }

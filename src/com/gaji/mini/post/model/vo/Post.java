@@ -2,6 +2,7 @@ package com.gaji.mini.post.model.vo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.gaji.mini.item.model.vo.Item;
 import com.gaji.mini.member.model.vo.Seller;
@@ -82,8 +83,10 @@ public class Post implements Serializable {
 		this.isSold = isSold;
 	}
 
-	public LocalDateTime getPostedAt() {
-		return this.postedAt;
+	public String getPostedAt() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+		String formatted = this.postedAt.format(formatter);
+		return formatted;
 	}
 
 	public void setPostedAt(LocalDateTime postedAt) {

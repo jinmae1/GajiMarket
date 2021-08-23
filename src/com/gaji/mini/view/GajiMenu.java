@@ -54,17 +54,13 @@ public class GajiMenu {
 						System.out.println(logInMember);
 						// memberType = memberManager.checkMemberType(id);
 						if (memberManager.checkPassword(logInMember, pw))
-							new BoardMenu(logInMember).boardMenu();
+							new BoardMenu(logInMember);
 						// if ("buyer".equals(memberType)) {
 						// System.out.println(memberManager.getMember(id));
 						// } else if ("seller".equals(memberType)) {
 						// seller = (Seller) memberManager.getMember(id);
 						// }
 
-						break;
-
-					case 5:
-						GameMenu();
 						break;
 
 					case 9:
@@ -150,10 +146,23 @@ public class GajiMenu {
 
 		Map<String, Member> keymap = new TreeMap<>(m);
 		ScreenClear.clearScreen(0);
+		System.out.println(TextColors.GREEN + "회원유형\tID\t\t이름\t\t암호" + TextColors.RESET);
+		System.out.println("=======================================================");
 		for (String key : keymap.keySet()) {
-			System.out.println(TextColors.colorText(keymap.get(key).toString(), TextColors.GREEN));
+			Member temp = keymap.get(key);
+			String type = temp.getClass().getSimpleName();
+			if ("Seller".equals(type))
+				type = TextColors.colorText(type, TextColors.BLUE);
+			else if ("Buyer".equals(type))
+				type = TextColors.colorText(type, TextColors.RED);
+
+			System.out.printf("%s\t\t%s\t\t%s\t%s%n", type, temp.getID(), temp.getName(),
+					TextColors.YELLOW + temp.getPw() + TextColors.RESET);
+			// System.out.println(TextColors.colorText(keymap.get(key).toString(),
+			// TextColors.GREEN));
 
 		}
+
 	}
 
 	public void GameMenu() {

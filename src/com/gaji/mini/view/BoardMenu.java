@@ -69,28 +69,35 @@ public class BoardMenu {
 						// }
 						// 게시글 내용 조회
 						int postNo = selectPostNo();
-						showPost(postNo);
+						while (showPost(postNo) != 0) {
+
+						}
 						break;
 
 					case 2:
 						if (currentSeller != null)
 							board.createPost(currentSeller, writePost(currentSeller));
 						// 상품 등록
-						if (currentBuyer != null) {
-							System.out.print("구매할 상품 번호");
+						else if (currentBuyer != null) {
+							System.out.print("구매할 상품의 글 번호: ");
 							board.buyItem(currentBuyer, sc.nextInt());
 						}
 						break;
 
 					case 3:
+						ScreenClear.clearScreen(0);
 						showUserInfo(currentUser);
-						System.out.println(membermManager.getMoney(currentUser) + "원");
+						System.out.println("소지금: " + membermManager.getMoney(currentUser) + "원\n");
 						// 로그인 유저 정보 출력
 
 						if (currentSeller != null) {
-							System.out.println(currentSeller.getPostedList());
-							for (Integer postKey : currentSeller.getPostedList())
-								System.out.println(board.getPost(Integer.valueOf(postKey)));
+							// System.out.println(currentSeller.getPostedList());
+							for (Integer postKey : currentSeller.getPostedList()) {
+								Post temp = board.getPost(Integer.valueOf(postKey));
+								System.out.println(temp.getPostNo() + ". " + temp.getTitle() + ":\t" + temp.getItem());
+								// System.out.println(board.getPost(Integer.valueOf(postKey)));
+
+							}
 						}
 
 						// if (currentBuyer != null)
@@ -99,9 +106,16 @@ public class BoardMenu {
 						break;
 
 					case 4:
-						System.out.print("충전금액: ");
-						membermManager.charge(currentUser, sc.nextInt());
-						System.out.println("현재 금액: " + membermManager.getMoney(currentUser) + "원");
+						if (currentBuyer != null) {
+
+							System.out.print("충전할 금액: ");
+							membermManager.charge(currentUser, sc.nextInt());
+							System.out.println("현재 금액: " + membermManager.getMoney(currentUser) + "원");
+						} else if (currentSeller != null) {
+							System.out.println("인출할 금액: ");
+							membermManager.withdraw(currentUser, sc.nextInt());
+							System.out.println("현재 금액: " + membermManager.getMoney(currentUser) + "원");
+						}
 						break;
 
 					case 5:
@@ -110,12 +124,15 @@ public class BoardMenu {
 							int selectedNo = sc.nextInt();
 							System.out.println(board.deletePost((Seller) currentUser, selectedNo));
 							// 삭제
+						} else if (currentBuyer != null) {
+
 						}
 						break;
 
 					case 0:
 						currentBuyer = null;
 						currentSeller = null;
+						ScreenClear.clearScreen(0);
 						return;
 
 					default:
@@ -136,6 +153,34 @@ public class BoardMenu {
 
 	private void sort(Map<Integer, Post> p) {
 		Map<Integer, Post> pMap = new TreeMap<>(p);
+		ScreenClear.clearScreen(0);
+
+		// System.out.printf(TextColors.GREEN + "번호\t 제목 \t\t작성자\t\t등록 시각\t판매여부\n"
+		System.out.printf(TextColors.GREEN + "%s\t%15s\t\t%s\t\t%s\t\t%s%n", "번호", "제목", "작성자", "등록 시각",
+				"판매여부" + "\n----------------------------------------------------------------------------------------"
+						+ TextColors.RESET);
+		for (Integer key : pMap.keySet()) {
+			Post post = pMap.get(key);
+			String soldStat = "판매중";
+			if (post.isSold())
+				soldStat = TextColors.RED + "판매완료";
+
+			// System.out.println(post.getPostNo() + "\t" + post.getTitle() + "\t" +
+			// post.getPostedBy() + "\t\t"
+			// + post.getPostedAt() + "\t" + soldStat + TextColors.RESET);
+			System.out.printf("%s\t%-15s\t\t%s\t\t%s\t\t%s%n", post.getPostNo(), post.getTitle(), post.getPostedBy(),
+					post.getPostedAt(), soldStat + TextColors.RESET);
+			// else
+			// System.out.println(post.getPostNo() + "\t" + post.getTitle() + "\t" +
+			// post.getPostedBy() + "\t\t"
+			// + post.getPostedAt() + "\t" + "판매중");
+			// TODO: postedby의 toSTring 수정
+		}
+
+	}
+
+	private void sort2(Map<Integer, Post> p) {
+		Map<Integer, Post> pMap = new TreeMap<>(p);
 		for (Integer key : pMap.keySet()) {
 			Post post = pMap.get(key);
 			if (post.isSold())
@@ -148,7 +193,7 @@ public class BoardMenu {
 		}
 	}
 
-	private void showPost(int postNo) {
+	private int showPost(int postNo) {
 		ScreenClear.clearScreen(0);
 		Post temp = board.getPost(postNo);
 		// 여기서 보여주고 사용자가 돌아가기(ex -1 등을 누르면 게시판 메뉴로 가기)
@@ -157,13 +202,13 @@ public class BoardMenu {
 
 		System.out.print("\n> 돌아가기(9): ");
 		// TODO: 여기 고치기
-		sc.nextInt();
+		return sc.nextInt(); // 767676
 
 	}
 
 	private int selectPostNo() {
 		// 스캐너로 입력받고 입력 받은 값을 리턴
-		System.out.println("> 게시글 선택(No): ");
+		System.out.print("\n> 게시글 선택(No): ");
 
 		return sc.nextInt();
 	}
